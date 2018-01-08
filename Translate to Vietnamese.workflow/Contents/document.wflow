@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AMApplicationBuild</key>
+	<string>444.4</string>
+	<key>AMApplicationVersion</key>
+	<string>2.8</string>
+	<key>AMDocumentVersion</key>
+	<string>2</string>
+	<key>actions</key>
+	<array>
+		<dict>
+			<key>action</key>
+			<dict>
+				<key>AMAccepts</key>
+				<dict>
+					<key>Container</key>
+					<string>List</string>
+					<key>Optional</key>
+					<true/>
+					<key>Types</key>
+					<array>
+						<string>com.apple.applescript.object</string>
+					</array>
+				</dict>
+				<key>AMActionVersion</key>
+				<string>1.0.2</string>
+				<key>AMApplication</key>
+				<array>
+					<string>Automator</string>
+				</array>
+				<key>AMParameterProperties</key>
+				<dict>
+					<key>source</key>
+					<dict/>
+				</dict>
+				<key>AMProvides</key>
+				<dict>
+					<key>Container</key>
+					<string>List</string>
+					<key>Types</key>
+					<array>
+						<string>com.apple.applescript.object</string>
+					</array>
+				</dict>
+				<key>ActionBundlePath</key>
+				<string>/System/Library/Automator/Run AppleScript.action</string>
+				<key>ActionName</key>
+				<string>Run AppleScript</string>
+				<key>ActionParameters</key>
+				<dict>
+					<key>source</key>
+					<string>-- AppleScript to translate seleted text to Vietnamese-- Made by Danh Pham (danhph@outlook.com)-- at Jan 8, 2018on run argv	-- SETTINGS 	set googleTranslate to "https://translate.google.com"	set desLang to "vi"	set defaultBrowser to null --  set null to get default browser 		-- SCRIPT STARTS	if defaultBrowser is equal to null then		set defaultBrowser to (do shell script "export VERSIONER_PERL_PREFER_32_BIT=yes; perl -MMac::InternetConfig -le 'print +(GetICHelper \"http\")[1]'") as text	end if		set desURL to googleTranslate &amp; "/#auto/" &amp; desLang &amp; "/" &amp; item 1 of argv		if defaultBrowser is equal to "Safari" then		tell application "Safari"			activate			set windowCount to count of window						-- Open new tab if Safari is not opened			if windowCount is equal to 0 then				make new document			else				-- Switch Google Translate tab if it is opened				-- Repeat for Every Window				repeat with x from 1 to windowCount					set tabCount to number of tabs in window x										-- Repeat for Every Tab in Current Window					repeat with y from 1 to tabCount						-- Get Tab Name &amp; URL						set tabURL to URL of tab y of window x						set theURL to tabURL as string												-- Check if Google Translate is opened						if theURL contains "translate.google" then							set URL of tab y of window x to desURL							tell window x to set current tab to tab y							return						end if					end repeat				end repeat			end if			tell front window				set current tab to (make new tab with properties {URL:desURL})				return			end tell		end tell	end if		if defaultBrowser is equal to "Google Chrome" then		tell application "Google Chrome"			activate			set windowCount to count of window						-- Open new tab if Chrome is not opened			if windowCount is equal to 0 then				make new window			else				-- Switch Google Translate tab if it is opened				-- Repeat for Every Window				repeat with x from 1 to windowCount					set tabCount to number of tabs in window x										-- Repeat for Every Tab in Current Window					repeat with y from 1 to tabCount						-- Get Tab Name &amp; URL						set tabURL to URL of tab y of window x						set theURL to tabURL as string												-- Check if Google Translate is opened						if theURL contains "translate.google" then							set URL of tab y of window x to desURL							return						end if					end repeat				end repeat			end if			tell front window				make new tab with properties {URL:desURL}				return			end tell		end tell	end ifend run</string>
+				</dict>
+				<key>BundleIdentifier</key>
+				<string>com.apple.Automator.RunScript</string>
+				<key>CFBundleVersion</key>
+				<string>1.0.2</string>
+				<key>CanShowSelectedItemsWhenRun</key>
+				<false/>
+				<key>CanShowWhenRun</key>
+				<true/>
+				<key>Category</key>
+				<array>
+					<string>AMCategoryUtilities</string>
+				</array>
+				<key>Class Name</key>
+				<string>RunScriptAction</string>
+				<key>InputUUID</key>
+				<string>7E28D909-2F5F-46BE-A225-3A28B70A339F</string>
+				<key>Keywords</key>
+				<array>
+					<string>Run</string>
+				</array>
+				<key>OutputUUID</key>
+				<string>E283E86B-5B43-4808-AE61-EB325D75C97D</string>
+				<key>UUID</key>
+				<string>8558453D-42A1-4335-8231-8DF65B813C3D</string>
+				<key>UnlocalizedApplications</key>
+				<array>
+					<string>Automator</string>
+				</array>
+				<key>arguments</key>
+				<dict>
+					<key>0</key>
+					<dict>
+						<key>default value</key>
+						<string>on run {input, parameters}
+	
+	(* Your script goes here *)
+	
+	return input
+end run</string>
+						<key>name</key>
+						<string>source</string>
+						<key>required</key>
+						<string>0</string>
+						<key>type</key>
+						<string>0</string>
+						<key>uuid</key>
+						<string>0</string>
+					</dict>
+				</dict>
+				<key>isViewVisible</key>
+				<true/>
+				<key>location</key>
+				<string>641.500000:899.000000</string>
+				<key>nibPath</key>
+				<string>/System/Library/Automator/Run AppleScript.action/Contents/Resources/Base.lproj/main.nib</string>
+			</dict>
+			<key>isViewVisible</key>
+			<true/>
+		</dict>
+	</array>
+	<key>connectors</key>
+	<dict/>
+	<key>workflowMetaData</key>
+	<dict>
+		<key>serviceInputTypeIdentifier</key>
+		<string>com.apple.Automator.text</string>
+		<key>serviceOutputTypeIdentifier</key>
+		<string>com.apple.Automator.nothing</string>
+		<key>serviceProcessesInput</key>
+		<integer>0</integer>
+		<key>workflowTypeIdentifier</key>
+		<string>com.apple.Automator.servicesMenu</string>
+	</dict>
+</dict>
+</plist>
