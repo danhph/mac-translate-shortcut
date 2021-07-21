@@ -1,6 +1,6 @@
 -- AppleScript to translate selected text into Vietnamese using Google Translate (only Safari or Google Chrome)
--- Made by Danh Pham (danhph@outlook.com) 
--- Version: 1.0 (Jan 8, 2018)
+-- Made by Danh Pham (danhph@outlook.com) at Jan 8, 2018
+-- Updated at Jul 21, 2021: made it works with macOS 11.4
 
 on run argv
     -- SETTINGS 
@@ -10,7 +10,14 @@ on run argv
     
     -- SCRIPT STARTS
     if defaultBrowser is equal to null then
-        set defaultBrowser to (do shell script "export VERSIONER_PERL_PREFER_32_BIT=yes; perl -MMac::InternetConfig -le 'print +(GetICHelper \"http\")[1]'") as text
+		set defaultBrowser to do shell script "defaults read \\
+	    	~/Library/Preferences/com.apple.LaunchServices/com.apple.launchservices.secure \\
+    		| awk -F'\"' '/http;/{print window[(NR)-1]}{window[NR]=$2}'"
+		if defaultBrowser contains "chrome" then
+			set defaultBrowser to "Google Chrome"
+		else
+    		set defaultBrowser to "Safari"
+		end if
     end if
     
     set desURL to googleTranslate & "/#auto/" & desLang & "/" & item 1 of argv
